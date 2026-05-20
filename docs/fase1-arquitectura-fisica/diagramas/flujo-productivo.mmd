@@ -1,0 +1,24 @@
+%% Flujo productivo general — Fase 1, §1.5
+%% Render: mmdc -i flujo-productivo.mmd -o flujo-productivo.png
+flowchart TD
+    A[Recepción de bolsa inoculada] --> B[Cuarentena visual 24 h]
+    B --> C[Incubación<br/>T ambiente, oscuridad]
+    C --> D{¿Colonización<br/>completa?}
+    D -- No --> C
+    D -- Sí --> E[Apertura / corte<br/>según especie]
+    E --> F[Inducción de fructificación<br/>en contenedor sellado]
+    F --> G[Pinning<br/>formación de primordios]
+    G --> H[Maduración]
+    H --> I[Cosecha<br/>margen del sombrero aplana]
+    I --> J{¿Fresco<br/>o seco?}
+    J -- Fresco --> K[Empaque refrigerado]
+    K --> L[Distribución < 72 h]
+    J -- Seco --> M[Deshidratado §1.6]
+    M --> N[Empaque hermético]
+    N --> O[Distribución]
+
+    %% Registros de datos hacia DB Tópico 7
+    A -. registro lote .-> DB[(DB lotes)]
+    E -. fecha apertura .-> DB
+    I -. peso fresco .-> DB
+    M -. peso seco + factor .-> DB

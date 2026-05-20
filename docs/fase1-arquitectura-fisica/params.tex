@@ -1,0 +1,37 @@
+% =====================================================================
+% params.tex  --  Parámetros editables del diseño físico (Fase 1)
+% =====================================================================
+% Modifica únicamente este archivo para adaptar el documento a tus
+% restricciones reales de espacio, temperatura ambiente y número de
+% contenedores. El resto de las secciones consume estos valores.
+% =====================================================================
+
+% ---------- Dimensiones disponibles del espacio de instalación -------
+\newcommand{\paramHmax}{180}   % altura máxima disponible [cm]
+\newcommand{\paramWmax}{90}    % ancho máximo disponible [cm]
+\newcommand{\paramDmax}{45}    % fondo máximo disponible [cm]
+
+% ---------- Condiciones ambientales del recinto ----------------------
+\newcommand{\paramTambMin}{16} % temperatura ambiente mínima esperada [°C]
+\newcommand{\paramTambMax}{26} % temperatura ambiente máxima esperada [°C]
+\newcommand{\paramHRamb}{45}   % humedad relativa ambiente típica [%]
+
+% ---------- Configuración del rack -----------------------------------
+\newcommand{\paramNiveles}{4}          % número de niveles del rack
+\newcommand{\paramNcontenedores}{3}    % número de cámaras de fructificación
+\newcommand{\paramVolTote}{55}         % volumen nominal de cada tote [L]
+
+% ---------- Especies asignadas (por contenedor) ----------------------
+\newcommand{\paramEspecieA}{Pleurotus ostreatus (oyster)}
+\newcommand{\paramEspecieB}{Hericium erinaceus (lion's mane)}
+\newcommand{\paramEspecieC}{Lentinula edodes (shiitake)}
+
+% ---------- Sensores por contenedor ----------------------------------
+\newcommand{\paramSensorTH}{SHT35}
+\newcommand{\paramSensorCO}{MH-Z19B}
+\newcommand{\paramSensorLux}{BH1750}
+\newcommand{\paramSensorSubstrato}{DS18B20 (opcional)}
+
+% ---------- Identificador de revisión --------------------------------
+\newcommand{\paramRevision}{0.1-esqueleto}
+\newcommand{\paramFecha}{\today}

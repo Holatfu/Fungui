@@ -1,0 +1,124 @@
+% =====================================================================
+% §1.6 — Integración de la deshidratadora en el flujo post-cosecha
+% =====================================================================
+\section{Integración de la deshidratadora en el flujo post-cosecha}
+\label{sec:postcosecha}
+
+\subsection*{Resumen de la sección}
+El operador cuenta con una deshidratadora doméstica preexistente. Esta
+sección queda preparada como \emph{plantilla} para registrar curvas de
+secado caracterizadas experimentalmente, referencias bibliográficas de
+arranque, criterios de humedad residual objetivo, presentación de
+producto seco, y los hooks que conectan el lote a la base de datos
+unificada del Tópico~7.
+
+% ---------------------------------------------------------------------
+\subsection{Especificaciones de la deshidratadora}
+\label{sec:postcosecha:equipo}
+
+% TODO[Operador]:
+%   - Marca y modelo exactos.
+%   - Potencia eléctrica [W].
+%   - Número y área de bandejas [m^2 totales].
+%   - Rango térmico operativo declarado por fabricante [°C].
+%   - Tipo de flujo (vertical / horizontal).
+%   - Sensor interno de temperatura (sí/no, precisión declarada).
+
+\subsection{Parámetros de referencia bibliográfica}
+\label{sec:postcosecha:referencias}
+
+% TODO[Fase 1 — relleno]:
+% Tabla con valores reportados en literatura, NO experimentales:
+%
+% | Especie | T secado [°C] | t aprox. [h] | HR residual obj. [%] | Fuente |
+% |---------|---------------|--------------|----------------------|--------|
+% | Oyster  | 40--50        | 6--10        | <10                  | \cite{} |
+% | Lion's mane | 40--55    | 8--12        | <10                  | \cite{} |
+% | Shiitake| 50--60        | 8--14        | <12                  | \cite{} |
+%
+% Estos valores son PUNTO DE PARTIDA. La caracterización propia se
+% registra en plantilla-secado.csv y luego se vuelca a la tabla §1.6.4.
+%
+% Citas mínimas requeridas en referencias.bib:
+%   - Chang \& Miles, "Mushrooms: Cultivation, Nutritional Value,
+%     Medicinal Effect, and Environmental Impact".
+%   - Stamets, "Growing Gourmet and Medicinal Mushrooms".
+%   - Algún paper indexado por especie (a buscar).
+
+\subsection{Criterio de humedad residual objetivo}
+\label{sec:postcosecha:hr_residual}
+
+% TODO[Fase 1 — relleno]:
+% - Justificar rango objetivo <10--12% para conservación estable a
+%   temperatura ambiente sin atmósfera modificada.
+% - Indicar método de medición:
+%     * Indirecto: balanza + masa antes/después.
+%     * Directo (opcional, futuro): higrómetro de aw o método AOAC.
+% - Validar criterio contra normativa aplicable (NMX, FDA, Codex)
+%   — esta validación queda fuera de alcance Fase 1, solo se cita.
+
+\subsection{Plantilla de caracterización (vacía)}
+\label{sec:postcosecha:plantilla}
+
+La plantilla operativa vive en
+\texttt{plantilla-secado.csv} (raíz del directorio de Fase 1). Se llena
+manualmente tras cada lote y, posteriormente, se importa al sistema
+del Tópico~7 para construir la curva propia.
+
+% TODO[Fase 1 — relleno]:
+% Incluir aquí la misma tabla en LaTeX (vacía) para referencia impresa:
+% columnas: Lote, Especie, T [°C], t [h], m_inicial [g], m_final [g],
+%           %HR_residual estimada, Observaciones organolépticas.
+
+\subsection{Flujo operativo post-cosecha}
+\label{sec:postcosecha:flujo}
+
+% TODO[Fase 1 — relleno]:
+% Incluir como figura el diagrama mermaid
+% diagramas/flujo-postcosecha.mmd con bifurcación fresco/seco.
+% Pasos a representar:
+%   - Cosecha → cepillado en seco (NO lavar con agua antes de secar)
+%   - Decisión por demanda y antigüedad:
+%       fresco → empaque refrigerado → distribución <72 h
+%       seco   → deshidratado §1.6 → empaque hermético → distribución
+%   - Registro de masa fresca cosechada en lote (Fase 7)
+
+\subsection{Presentación de producto seco}
+\label{sec:postcosecha:presentacion}
+
+% TODO[Fase 1 — relleno]:
+%   - Formatos: bolsa metalizada sellada al vacío opcional, frasco de
+%     vidrio para premium.
+%   - Gramajes comerciales sugeridos: 20 g, 50 g, 100 g.
+%   - Etiquetado mínimo NO regulatorio (lote, fecha de deshidratado,
+%     especie, recomendación de rehidratación).
+%   - El detalle regulatorio (NOM-051, registros sanitarios) queda
+%     fuera de alcance de la Fase 1.
+
+\subsection{Hooks para la base de datos (Tópico 7)}
+\label{sec:postcosecha:hooks}
+
+Para que la curva propia se construya con el tiempo, la tabla
+\texttt{cosechas} del schema unificado debe contemplar, por lote:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{kg\_fresco\_cosechado}
+  \item \texttt{kg\_destinado\_a\_secado}
+  \item \texttt{kg\_producto\_seco\_final}
+  \item \texttt{factor\_conversion} (calculado: seco / destinado)
+  \item \texttt{t\_secado\_horas}, \texttt{temp\_secado\_C}
+  \item \texttt{hr\_residual\_estimada\_pct}
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+\label{sec:postcosecha:aceptacion}
+
+\begin{itemize}[leftmargin=*]
+  \item Plantilla CSV creada y referenciada.
+  \item Al menos 3 referencias bibliográficas (una por especie) en
+        \texttt{referencias.bib}.
+  \item Diagrama de flujo post-cosecha con bifurcación
+        fresco/seco renderizable.
+  \item Los campos de la tabla \texttt{cosechas} aparecen como
+        requerimiento explícito para el schema del Tópico~7.
+\end{itemize}

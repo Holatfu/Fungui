@@ -1,0 +1,77 @@
+% =====================================================================
+% Fase 1 — Arquitectura física del rack de producción
+% Documento maestro. Compilar con:
+%     latexmk -pdf main.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ----- Paquetes base --------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ----- Layout ---------------------------------------------------------
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+% ----- Figuras y tablas ----------------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% ----- Diagramas vectoriales (TikZ) -----------------------------------
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,calc}
+
+% ----- Matemáticas y unidades ----------------------------------------
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+
+% ----- Bibliografía ---------------------------------------------------
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{referencias.bib}
+
+% ----- Hyperref (al final) -------------------------------------------
+\usepackage[hidelinks]{hyperref}
+
+% ----- Macro para placeholders de cotización -------------------------
+% Uso: \cotizar{Descripción exacta del componente y link sugerido}
+\newcommand{\cotizar}[1]{%
+  \textbf{[COTIZAR:}~\emph{#1}\textbf{]}%
+}
+
+% ----- Parámetros del diseño -----------------------------------------
+\input{params.tex}
+
+% =====================================================================
+\title{Sistema integral de cultivo gourmet de hongos\\
+       \large Fase 1 --- Arquitectura física del rack de producción}
+\author{Hola Tofu --- I+D}
+\date{Revisión \paramRevision\ --- \paramFecha}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+% ---------------------------------------------------------------------
+\input{secciones/01-rack.tex}
+\input{secciones/02-contenedores.tex}
+\input{secciones/03-asignacion-especies.tex}
+\input{secciones/04-bom.tex}
+\input{secciones/05-flujo-productivo.tex}
+\input{secciones/06-postcosecha.tex}
+% ---------------------------------------------------------------------
+
+\printbibliography
+
+\end{document}

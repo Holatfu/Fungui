@@ -1,0 +1,58 @@
+% =====================================================================
+% §1.5 — Diagrama de flujo del proceso productivo
+% =====================================================================
+\section{Flujo del proceso productivo}
+\label{sec:flujo}
+
+\subsection*{Resumen de la sección}
+Diagrama de extremo a extremo: recepción de bolsa inoculada $\to$
+incubación $\to$ inducción de fructificación $\to$ cosecha $\to$
+post-cosecha (fresco o deshidratado) $\to$ empaque $\to$ distribución.
+
+% ---------------------------------------------------------------------
+\subsection{Diagrama general}
+\label{sec:flujo:diagrama}
+
+% TODO[Fase 1 — relleno]:
+% - Versión rápida: incluir el diagrama mermaid de
+%   diagramas/flujo-productivo.mmd como figura (PNG exportado).
+% - Versión definitiva: redibujar en TikZ vectorial para el LaTeX.
+%
+% Estructura del flujo a representar:
+%   [Recepción bolsa inoculada]
+%        → [Cuarentena visual 24 h]
+%        → [Incubación a temperatura ambiente, oscuridad, sin abrir]
+%        → [Detección de colonización completa por inspección]
+%        → [Apertura / corte de bolsa según especie]
+%        → [Inducción de fructificación en contenedor sellado]
+%                  ↑ control HR, T, CO2, lux (Fase 2)
+%        → [Pinning (formación de primordios)]
+%        → [Maduración]
+%        → [Cosecha cuando margen de sombrero comienza a aplanar]
+%        → [Decisión: fresco vs deshidratado]
+%                  ↘ fresco → empaque cámara fría → distribución
+%                  ↘ seco   → §1.6 deshidratado → empaque → distribución
+%
+% Marcar puntos donde se registra dato en la base (Fase 7):
+%   • inoculación, apertura, primera cosecha, peso fresco, peso seco.
+
+\subsection{Indicadores operativos por etapa}
+\label{sec:flujo:kpi}
+
+% TODO[Fase 1 — relleno]:
+% Tabla:
+%   | Etapa | Variable monitoreada | Fuente del dato | Umbral / criterio |
+% Ejemplos:
+%   - Incubación → T sustrato (DS18B20 opcional) → 20--24 °C
+%   - Fructificación → HR + CO2 + lux → según especie (§1.3)
+%   - Cosecha → inspección visual + cámara (Fase 3)
+%   - Post-cosecha → masa fresca → balanza, registro manual en lote
+
+\subsection{Criterios de aceptación}
+\label{sec:flujo:aceptacion}
+
+\begin{itemize}[leftmargin=*]
+  \item El diagrama identifica TODO punto de registro de dato y lo
+        mapea a una tabla del schema (Fase 7).
+  \item No quedan transiciones sin condición de paso explícita.
+\end{itemize}

@@ -1,0 +1,66 @@
+% =====================================================================
+% §1.2 — Diseño de los contenedores (cámaras de fructificación)
+% =====================================================================
+\section{Diseño de los contenedores de fructificación}
+\label{sec:contenedores}
+
+\subsection*{Resumen de la sección}
+Cada uno de los \paramNcontenedores{} contenedores herméticos de
+\paramVolTote\,L se opera como una cámara independiente tipo
+\emph{Monotub} modificada, con intercambio gaseoso pasivo, pasamuros
+para instrumentación y sellado controlado.
+
+% ---------------------------------------------------------------------
+\subsection{Patrón de perforación para intercambio gaseoso pasivo}
+\label{sec:contenedores:perforacion}
+
+% TODO[Fase 1 — relleno]:
+% - Tabla por especie: diámetro de orificio [mm], separación entre
+%   centros [mm], número total de orificios, % de área abierta respecto
+%   al área lateral. Parametrizar según demanda metabólica:
+%       * Oyster: alta demanda de O2, tolera FAE intenso.
+%       * Lion's mane: demanda media, sensible a corrientes directas.
+%       * Shiitake: demanda media, tolera HR menor (~80--85%).
+% - Discutir filtro de polietileno microporoso (Tyvek o sintético)
+%   sobre cada perforación para mitigar contaminación.
+% - Esquema TikZ con malla de perforación cotada.
+
+\subsection{Pasamuros para instrumentación y servicios}
+\label{sec:contenedores:pasamuros}
+
+% TODO[Fase 1 — relleno]:
+% - Mapa de ubicación (vista superior + lateral) de:
+%     * SHT35  — pared lateral a 2/3 de altura, evitar línea directa
+%       del humidificador.
+%     * MH-Z19B — pared opuesta al SHT35, mismo plano.
+%     * BH1750 — tapa interior, evitar sombra del LED.
+%     * Pasacable cámara ESP32-CAM — tapa superior, centro.
+%     * Manguera humidificador — pared corta, parte baja.
+%     * Cable DS18B20 sustrato — pasamuros independiente, sellado con
+%       prensaestopa PG7.
+% - Tipo de prensaestopa por diámetro de cable (PG7 / PG9 / PG11).
+% - Procedimiento de sellado (silicona alimenticia + arandela EPDM).
+
+\subsection{Sellado e higiene del microambiente}
+\label{sec:contenedores:sellado}
+
+% TODO[Fase 1 — relleno]:
+% - Justificar empaque de silicona alimenticia grado FDA en perímetro
+%   de tapa.
+% - Procedimiento de sanitización entre lotes (peróxido 3\%, alcohol
+%   isopropílico 70\%, evitar cloro por corrosión del acero del rack).
+% - Tiempo de aireación post-sanitización antes de reintroducir bolsa
+%   inoculada.
+
+\subsection{Criterios de aceptación}
+\label{sec:contenedores:aceptacion}
+
+\begin{itemize}[leftmargin=*]
+  \item Cada contenedor mantiene HR $\geq$\,85\% durante al menos 4\,h
+        sin actuación del humidificador (verificable con telemetría
+        de Fase 2).
+  \item Los pasamuros no presentan fuga visible al ensayo de presión
+        positiva ligera (soplido controlado, sin gotear sello).
+  \item La tapa puede abrirse y cerrarse sin re-aplicar silicona por
+        al menos 30 ciclos antes de mantenimiento del empaque.
+\end{itemize}

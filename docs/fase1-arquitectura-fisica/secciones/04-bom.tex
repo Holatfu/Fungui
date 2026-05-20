@@ -1,0 +1,76 @@
+% =====================================================================
+% §1.4 — Lista de materiales (BOM) — Fase 1 (estructura física)
+% =====================================================================
+\section{Lista de materiales (BOM) --- Fase 1}
+\label{sec:bom}
+
+\subsection*{Resumen de la sección}
+Solo se incluyen los componentes \textbf{físicos del rack y los
+contenedores}. El BOM electrónico (sensores, ESP32, cámaras,
+humidificadores) se consolida en la Fase 8 después de cerrar las
+decisiones de las Fases 2 y 3, para evitar re-cotización.
+
+Los precios están deliberadamente vacíos: cada renglón se marca con
+\cotizar{descripción exacta a buscar} y se replica en
+\texttt{cotizaciones\_pendientes.md} con la búsqueda sugerida por
+proveedor (MercadoLibre MX, Home Depot, Steren, AliExpress).
+
+% ---------------------------------------------------------------------
+\subsection{Estructura del rack}
+\label{sec:bom:rack}
+
+% TODO[Fase 1 — relleno]:
+% Tabla con columnas:
+%   | Ítem | Descripción | Cant. | Económico (MXN) | Profesional (MXN) | Proveedor sugerido |
+% Renglones esperados:
+%   - Rack metálico \paramNiveles{} niveles, \paramHmax x \paramWmax x \paramDmax cm
+%   - Anclaje a pared (opcional, antivuelco)
+%   - Niveladores de patas (4 uds)
+%   - Tapete antiderrame para nivel inferior
+% Usar la macro \cotizar{...} en lugar de inventar precios.
+
+\subsection{Contenedores y sellado}
+\label{sec:bom:contenedores}
+
+% TODO[Fase 1 — relleno]:
+% Renglones esperados:
+%   - Tote hermético \paramVolTote\,L con tapa (x\paramNcontenedores)
+%   - Empaque de silicona alimenticia grado FDA (rollo)
+%   - Prensaestopas PG7/PG9/PG11 según pasamuros
+%   - Arandelas EPDM
+%   - Tornillería inoxidable M3/M4 para fijación de sensores
+%   - Tyvek o filtro microporoso para perforaciones (m^2)
+
+\subsection{Herramientas específicas requeridas}
+\label{sec:bom:herramientas}
+
+% TODO[Fase 1 — relleno]:
+%   - Sierra cilíndrica (hole saw) de diámetros derivados de §1.2.1
+%   - Punta cónica para abrir pasamuros en plástico HDPE
+%   - Termómetro infrarrojo para mapeo térmico del rack
+%   - Higrómetro de referencia para calibración cruzada con SHT35
+% Marcar las que ya tengo (laboratorio I+D) vs. las que faltan comprar.
+
+\subsection{Política de placeholders de precio}
+\label{sec:bom:politica}
+
+\textbf{Regla estricta:} ningún precio se inventa.
+\begin{itemize}[leftmargin=*]
+  \item Si el componente fue cotizado por el operador, se sustituye el
+        \cotizar{} por el valor real con fecha y URL.
+  \item Mientras no haya cotización, el renglón permanece marcado y
+        aparece replicado en \texttt{cotizaciones\_pendientes.md}.
+  \item Las dos columnas (económico / profesional) se consolidan solo
+        cuando ambas tienen al menos una cotización real cada una.
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+\label{sec:bom:aceptacion}
+
+\begin{itemize}[leftmargin=*]
+  \item Todo renglón sin precio aparece en
+        \texttt{cotizaciones\_pendientes.md} con búsqueda sugerida.
+  \item La cantidad de cada ítem está justificada (no se piden
+        "varios", se piden números concretos derivados de \S\ref{sec:rack}
+        y \S\ref{sec:contenedores}).
+\end{itemize}

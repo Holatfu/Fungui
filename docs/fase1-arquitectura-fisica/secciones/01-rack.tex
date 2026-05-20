@@ -1,0 +1,55 @@
+% =====================================================================
+% §1.1 — Plano dimensionado del rack
+% =====================================================================
+\section{Plano dimensionado del rack}
+\label{sec:rack}
+
+\subsection*{Resumen de la sección}
+Esta sección define la geometría del rack metálico que alojará los
+\paramNcontenedores{} contenedores de fructificación. El diseño es
+paramétrico: las dimensiones máximas disponibles (\paramHmax\,cm de alto,
+\paramWmax\,cm de ancho, \paramDmax\,cm de fondo) y la temperatura
+ambiente esperada (\paramTambMin--\paramTambMax\,\si{\celsius}) se
+declaran en \texttt{params.tex} y propagan al resto del documento.
+
+% ---------------------------------------------------------------------
+\subsection{Restricciones de diseño}
+\label{sec:rack:restricciones}
+
+% TODO[Fase 1 — relleno]:
+% - Listar restricciones mecánicas (carga útil por nivel, rigidez,
+%   anclaje a pared, ventilación de servicio entre niveles).
+% - Justificar elección de \paramNiveles{} niveles dado el alto disponible.
+% - Discutir tolerancia térmica del material vs. operación cercana a
+%   humidificador ultrasónico (corrosión galvánica).
+
+\subsection{Geometría y vista lateral}
+\label{sec:rack:geometria}
+
+% TODO[Fase 1 — relleno]:
+% - Figura TikZ con vista frontal y lateral del rack acotado.
+% - Tabla de cotas: separación entre estantes, altura libre por nivel,
+%   posición de cada contenedor en la estructura.
+% - Diagrama de carga (peso de tote lleno con sustrato húmedo: estimar
+%   ~12--18 kg por contenedor).
+
+\subsection{Selección de materiales}
+\label{sec:rack:materiales}
+
+% TODO[Fase 1 — relleno]:
+% - Comparar: acero galvanizado pintado vs. acero inoxidable vs.
+%   estantería plástica industrial. Criterios: resistencia a HR alta
+%   (>85\%), facilidad de sanitización, costo, disponibilidad MX.
+% - Recomendar UNA opción para BOM económica y UNA para BOM profesional.
+
+\subsection{Criterios de aceptación}
+\label{sec:rack:aceptacion}
+
+\begin{itemize}[leftmargin=*]
+  \item El rack soporta sin deformación visible la carga total estimada
+        (\paramNcontenedores{} contenedores cargados + accesorios).
+  \item La separación vertical entre niveles permite extraer cada tote
+        sin desmontar el rack ni desconectar cableado de sensores.
+  \item Existe un nivel reservado (típicamente el inferior o el
+        superior) para electrónica, broker MQTT, fuentes y humidificadores.
+\end{itemize}
