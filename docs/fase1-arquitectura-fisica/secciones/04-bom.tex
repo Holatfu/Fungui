@@ -1,0 +1,161 @@
+% =====================================================================
+% §1.4 — Lista de materiales (BOM) — Fase 1 (estructura física + esteril.)
+% =====================================================================
+\section{Lista de materiales (BOM) --- Fase 1}
+\label{sec:bom}
+
+Esta BOM incluye exclusivamente los componentes físicos del rack, los
+contenedores y el subsistema de \textbf{esterilización e inoculación}
+(\S\ref{sec:preparacion}). El BOM electrónico (sensores, ESP32, cámaras,
+humidificadores, broker) se consolida en la \textbf{Fase~8} tras cerrar
+las decisiones de las Fases~2 y~3.
+
+\textbf{Política de precios:} ningún precio se inventa. Cada renglón
+sin cotización aparece como \cotizar{...} y se replica en
+\texttt{cotizaciones\_pendientes.md} con búsqueda sugerida por
+proveedor mexicano (MercadoLibre MX, Home Depot, Steren, AliExpress,
+Tornimex).
+
+% ---------------------------------------------------------------------
+\subsection{Estructura del rack}
+\label{sec:bom:rack}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Rack metálico \paramNiveles{} niveles, $\sim$\paramHmax$\times$\paramWmax$\times$\paramDmax\,cm,
+        carga $\geq$\paramCargaUtilNivel\,kg/nivel.
+        \cotizar{anaquel metálico 5 niveles 180×90×45 cm Home Depot MX}
+  \item Niveladores roscados M10 con goma (×4).
+        \cotizar{niveladores patas M10 con goma Steren}
+  \item Anclaje antivuelco a muro (kit con taquetes y solera).
+        \cotizar{kit antivuelco anaquel Home Depot}
+  \item Tapete antiderrame plástico para nivel inferior.
+        \cotizar{tapete antiderrame plástico 90×45 cm MercadoLibre MX}
+\end{itemize}
+
+\subsection{Contenedores y sellado}
+\label{sec:bom:contenedores}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Tote hermético \paramVolTote\,L HDPE con tapa clip alimenticio
+        ($\times$\paramNcontenedores).
+        \cotizar{caja hermética 60 litros tapa clip MercadoLibre MX}
+  \item Empaque silicona alimenticia grado FDA, rollo 5\,m $\times$ 6\,mm.
+        \cotizar{empaque silicona alimenticia FDA 5m rollo}
+  \item Membrana Tyvek 1073B (1\,m$^2$, $\sim$~corte para 200--300 perforaciones).
+        \cotizar{Tyvek 1073B sheet AliExpress mycology}
+  \item Cinta adhesiva tipo \emph{micropore} alternativa (rollo 50\,mm).
+        \cotizar{cinta micropore 50mm rollo MercadoLibre}
+\end{itemize}
+
+\subsection{Pasamuros, tornillería y sellado mecánico}
+\label{sec:bom:pasamuros}
+
+Total: 18 pasamuros (\S\ref{sec:contenedores:pasamuros}).
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Prensaestopas PG7 (cable 3--6{,}5\,mm) $\times$ 12.
+        \cotizar{prensaestopa PG7 nylon Steren paquete}
+  \item Prensaestopas PG9 (cable 4--8\,mm) $\times$ 6.
+        \cotizar{prensaestopa PG9 nylon Steren}
+  \item Prensaestopas PG11 (cable 5--10\,mm) $\times$ 3.
+        \cotizar{prensaestopa PG11 nylon Steren}
+  \item Arandelas EPDM 10--14\,mm $\times$ 24.
+        \cotizar{arandela EPDM 12mm ferretería}
+  \item Silicona neutra grado alimenticio (cartucho) $\times$ 2.
+        \cotizar{silicona neutra grado alimenticio Home Depot}
+  \item Tornillería inoxidable A2 M3$\times$16 y M4$\times$16 (kit surtido).
+        \cotizar{tornillería inoxidable A2 M3 M4 kit Tornimex}
+\end{itemize}
+
+\subsection{Subsistema de esterilización e inoculación (\S\ref{sec:preparacion})}
+\label{sec:bom:esterilizacion}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Olla de presión \paramVolOllaPresion\,L acero inoxidable
+        ($\geq$\paramPresionEster\,psi).
+        \cotizar{olla presión 23L acero inoxidable 15 PSI MercadoLibre MX}
+  \item Termómetro de aguja para tapa de olla (verificación independiente).
+        \cotizar{termómetro analógico tapa olla presión}
+  \item Tote hermético adicional 80\,L para Still Air Box (SAB).
+        \cotizar{caja hermética 80L tapa clip MercadoLibre MX}
+  \item Frascos de vidrio boca ancha 1\,L con tapa metálica ($\times$10)
+        para grain spawn.
+        \cotizar{frascos vidrio boca ancha 1L mason jar AliExpress}
+  \item Bolsas autoclavables polipropileno con parche filtro 0{,}2\,\si{\micro\meter}
+        ($\times$50, consumible).
+        \cotizar{bolsas cultivo hongos polipropileno filtro 0.2um}
+  \item Guantes nitrilo sin polvo (caja 100).
+        \cotizar{guantes nitrilo sin polvo M caja 100}
+  \item Cubrebocas tipo KN95 (caja 20).
+        \cotizar{cubrebocas KN95 caja 20}
+  \item Alcohol isopropílico 70\,\% (4\,L).
+        \cotizar{alcohol isopropílico 70 4L grado laboratorio}
+  \item Encendedor butano largo / mechero alcohol (esterilización
+        de bisturí en SAB).
+        \cotizar{encendedor butano largo cocina}
+\end{itemize}
+
+\subsection{Insumos de cultivo (consumibles por lote)}
+\label{sec:bom:insumos}
+
+\pendientecurso{Definir sustrato exacto según especies tras el curso.
+Defaults orientativos para tres especies asumidas:}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Paja de trigo o cebada (10--20\,kg, oyster, shiitake).
+        \cotizar{paja trigo bala forraje MercadoLibre MX}
+  \item Pellets aserrín de roble/haya con salvado (10--20\,kg, lion's mane).
+        \cotizar{pellets aserrín roble cultivo hongos AliExpress}
+  \item Grano para spawn: quinoa, mijo o trigo (5\,kg).
+        \cotizar{quinoa orgánica 5kg granel}
+  \item Cultivo madre (jeringa de esporas o LC) por especie (3
+        jeringas inicial).
+        \cotizar{jeringa esporas Pleurotus / Hericium / Lentinula}
+  \item Carbonato de calcio (yeso, CaSO$_4 \cdot 2$H$_2$O), 1\,kg para
+        amortiguar pH.
+        \cotizar{yeso agrícola 1kg cultivo MercadoLibre}
+\end{itemize}
+
+\subsection{Herramientas auxiliares}
+\label{sec:bom:herramientas}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Sierra cilíndrica (hole saw) 6\,mm para perforación de totes
+        (kit surtido 3--13\,mm).
+        \cotizar{kit sierra cilíndrica hole saw 3-13mm Home Depot}
+  \item Punta cónica abrepasos para HDPE.
+        \cotizar{escariador cónico abrepasos HDPE}
+  \item Termómetro infrarrojo (mapeo térmico del rack).
+        \cotizar{termómetro infrarrojo Truper -50 a 380C Steren}
+  \item Higrómetro de referencia digital ($\pm$2\,\%HR) para calibración
+        cruzada con SHT35.
+        \cotizar{higrómetro digital referencia ±2%HR MercadoLibre}
+  \item Balanza de precisión 0{,}1\,g, rango 0--3\,kg.
+        \cotizar{balanza precisión 0.1g 3kg MercadoLibre}
+\end{itemize}
+
+\subsection{Diferido a Fase 8 (electrónica)}
+\label{sec:bom:diferido}
+
+No cotizar hasta cerrar Fases 2 y 3:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Sensores SHT35, MH-Z19B, BH1750, DS18B20.
+  \item Multiplexor I$^2$C TCA9548A (depende de topología \S2.2).
+  \item ESP32-S3 (con cámara) o ESP32 + ESP32-CAM separados.
+  \item Humidificadores ultrasónicos por contenedor.
+  \item Ventiladores 5\,V/12\,V para FAE.
+  \item LEDs y drivers para fotoperiodo.
+  \item Raspberry Pi 4/5 o mini-PC dedicado al broker MQTT + TSDB.
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+\label{sec:bom:aceptacion}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Cada renglón sin precio aparece en
+        \texttt{cotizaciones\_pendientes.md} con búsqueda sugerida.
+  \item Las cantidades están justificadas por las
+        Secciones~\ref{sec:rack} a~\ref{sec:preparacion}.
+  \item Ningún precio inventado entra al documento.
+\end{itemize}

@@ -1,0 +1,127 @@
+% =====================================================================
+% §1.6 — Integración de la deshidratadora en el flujo post-cosecha
+% =====================================================================
+\section{Integración de la deshidratadora en el flujo post-cosecha}
+\label{sec:postcosecha}
+
+El operador cuenta con una deshidratadora doméstica preexistente. Esta
+sección documenta los parámetros de referencia bibliográfica, el
+criterio de humedad residual objetivo, la presentación comercial del
+producto seco y los \emph{hooks} hacia la base de datos.
+
+% ---------------------------------------------------------------------
+\subsection{Especificaciones de la deshidratadora}
+\label{sec:postcosecha:equipo}
+
+\pendientecurso{Registrar marca, modelo, potencia [W], número y área
+total de bandejas [m$^2$], rango térmico operativo declarado y tipo de
+flujo (vertical/horizontal) del equipo del operador.}
+
+\subsection{Parámetros de referencia bibliográfica}
+\label{sec:postcosecha:referencias}
+
+Los rangos en la tabla~\ref{tab:secado} son \textbf{punto de partida} a
+validar contra caracterización experimental
+(\S\ref{sec:postcosecha:plantilla}).
+
+\begin{table}[H]
+  \centering
+  \caption{Parámetros de secado reportados en literatura.}
+  \label{tab:secado}
+  \begin{tabularx}{\linewidth}{Xcccc}
+    \toprule
+    \textbf{Especie} & T [\si{\celsius}] & t [h] & HR resid. obj. [\%] & Fuente \\
+    \midrule
+    \paramEspecieA & 40--50 & 6--10  & $<$10 & \cite{stamets2000,chang2004} \\
+    \paramEspecieB & 40--55 & 8--12  & $<$10 & \cite{stamets2000} \\
+    \paramEspecieC & 50--60 & 8--14  & $<$12 & \cite{chang2004} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Criterio de humedad residual objetivo}
+\label{sec:postcosecha:hr_residual}
+
+Se adopta como criterio de conservación estable a temperatura ambiente
+sin atmósfera modificada \textbf{HR residual $<$ 10--12\,\%}, valor por
+debajo del umbral de actividad de agua ($a_w$) que inhibe crecimiento
+de la mayoría de mohos y bacterias~\cite{chang2004}.
+
+\paragraph{Método de medición (Fase 1, indirecto).} Diferencia de masa
+antes y después del secado:
+
+\begin{equation}
+  \text{HR}_{\text{resid}} = 1 -
+    \frac{m_{\text{final}} \cdot (1 - \text{HR}_{\text{inicial}})}{m_{\text{final}}}
+\end{equation}
+
+\noindent asumiendo HR inicial del hongo fresco $\approx 90$\,\%
+(literatura). Se documenta como estimación; método directo por $a_w$
+o método AOAC queda fuera de alcance Fase~1.
+
+\subsection{Plantilla de caracterización experimental}
+\label{sec:postcosecha:plantilla}
+
+La plantilla operativa vive en \texttt{plantilla-secado.csv} con
+columnas: lote, especie, fecha inicio/fin, T [\si{\celsius}], t [h],
+masas inicial y final, HR residual estimada, factor de conversión y
+observaciones organolépticas. Se llena manualmente tras cada lote.
+
+\subsection{Flujo operativo post-cosecha}
+\label{sec:postcosecha:flujo}
+
+El diagrama \texttt{diagramas/flujo-postcosecha.mmd} describe la
+bifurcación fresco/seco. Reglas operativas:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Cosecha $\to$ cepillado en seco. \textbf{No lavar con agua}
+        antes de deshidratar.
+  \item Decisión fresco/seco por demanda y tiempo desde cosecha:
+    \begin{itemize}
+      \item Fresco si hay pedido pendiente con entrega $<$72\,h.
+      \item Seco para excedente, pedido específico o conservación.
+    \end{itemize}
+  \item Pesaje fresco $\to$ registro en DB \textbf{antes} de
+        deshidratar.
+\end{itemize}
+
+\subsection{Presentación de producto seco}
+\label{sec:postcosecha:presentacion}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Formatos: bolsa metalizada termosellada (línea estándar) o
+        frasco de vidrio (línea premium).
+  \item Gramajes: 20\,g, 50\,g, 100\,g.
+  \item Etiqueta mínima: nombre comercial, especie (binomial),
+        gramaje, fecha de deshidratado, lote, recomendación de
+        rehidratación (15\,min en agua tibia).
+  \item Detalle regulatorio (NOM-051, registro sanitario): fuera de
+        alcance Fase~1.
+\end{itemize}
+
+\subsection{Hooks para la base de datos (Tópico~7)}
+\label{sec:postcosecha:hooks}
+
+Campos de la tabla \texttt{cosechas}:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item \texttt{kg\_fresco\_cosechado}
+  \item \texttt{kg\_destinado\_a\_secado}
+  \item \texttt{kg\_producto\_seco\_final}
+  \item \texttt{factor\_conversion} (seco $\div$ destinado)
+  \item \texttt{t\_secado\_horas}, \texttt{temp\_secado\_C}
+  \item \texttt{hr\_residual\_estimada\_pct}
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+\label{sec:postcosecha:aceptacion}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Tabla~\ref{tab:secado} respaldada por al menos dos
+        referencias.
+  \item Plantilla CSV creada y referenciada.
+  \item Diagrama post-cosecha con bifurcación fresco/seco
+        renderizable.
+  \item Campos para la tabla \texttt{cosechas} aparecen en el schema
+        del Tópico~7.
+\end{itemize}

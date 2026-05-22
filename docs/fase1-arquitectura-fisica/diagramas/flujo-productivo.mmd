@@ -1,0 +1,39 @@
+%% Flujo productivo general — Fase 1, §1.5
+%% Incluye subsistema aguas arriba: esterilización + inoculación (§1.7)
+%% Render: mmdc -i flujo-productivo.mmd -o flujo-productivo.png
+flowchart TD
+    %% ============ §1.7 Preparación de sustrato ============
+    P1[Hidratación sustrato<br/>HR ~65%] --> P2[Embolsado<br/>bolsa autoclavable + filtro]
+    P2 --> P3[Esterilización olla presión<br/>15 psi · 90 min]
+    P3 --> P4[Enfriado < 30 °C<br/>~8-12 h]
+    P4 --> P5[Inoculación en SAB<br/>5-10% grain spawn]
+    P5 --> P6[Incubación<br/>oscuridad · 22-24 °C · 10-21 d]
+    P6 --> Q{¿Contaminación<br/>detectada?}
+    Q -- Sí --> DESCARTE[Descartar<br/>registrar lote fallido]
+    Q -- No --> P7[Bolsa colonizada<br/>lista para fructificar]
+
+    %% ============ Fructificación en rack ============
+    P7 --> F1[Apertura/corte de bolsa<br/>según especie]
+    F1 --> F2[Inducción fructificación<br/>contenedor sellado]
+    F2 --> F3[Pinning<br/>formación primordios]
+    F3 --> F4[Maduración]
+    F4 --> F5[Cosecha<br/>margen sombrero aplana]
+
+    %% ============ §1.6 Post-cosecha ============
+    F5 --> J{¿Fresco<br/>o seco?}
+    J -- Fresco --> K[Empaque refrigerado<br/>2-4 °C]
+    K --> L[Distribución < 72 h]
+    J -- Seco --> M[Deshidratado §1.6]
+    M --> N[Empaque hermético]
+    N --> O[Distribución]
+
+    %% ============ Registros hacia DB Tópico 7 ============
+    P1 -. lote · sustrato .-> DB[(DB)]
+    P3 -. T · t · presión .-> DB
+    P5 -. fecha inoc · spawn .-> DB
+    P6 -. fecha colonización .-> DB
+    Q  -. contaminación .-> DB
+    F1 -. fecha apertura .-> DB
+    F2 -. telemetría continua .-> DB
+    F5 -. masa fresca · BE% .-> DB
+    M  -. masa seca · factor .-> DB

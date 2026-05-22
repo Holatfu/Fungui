@@ -1,0 +1,24 @@
+%% Flujo post-cosecha con bifurcación fresco/seco — Fase 1, §1.6.5
+%% Render: mmdc -i flujo-postcosecha.mmd -o flujo-postcosecha.png
+flowchart TD
+    A[Cosecha en contenedor] --> B[Cepillado en seco<br/>NO lavar con agua]
+    B --> C[Pesaje en fresco<br/>balanza precisión 0.1 g]
+    C --> D{Decisión por<br/>demanda actual}
+
+    D -- Fresco pedido <72 h --> E[Empaque en charola PET<br/>+ refrigeración 2-4 °C]
+    E --> F[Distribución fresco]
+
+    D -- Excedente / pedido seco --> G[Deshidratado<br/>T y t según §1.6.2]
+    G --> H[Pesaje en seco]
+    H --> I[Cálculo factor<br/>conversión fresco→seco]
+    I --> J{HR residual<br/>< objetivo?}
+    J -- No --> G
+    J -- Sí --> K[Empaque hermético<br/>bolsa metalizada o frasco]
+    K --> L[Etiquetado<br/>lote / fecha / especie]
+    L --> M[Distribución seco]
+
+    %% Registros hacia DB
+    C -. kg_fresco .-> DB[(DB cosechas)]
+    H -. kg_seco .-> DB
+    I -. factor .-> DB
+    G -. T, t .-> DB
