@@ -20,8 +20,10 @@
 \newcommand{\paramNiveles}{4}          % número de niveles del rack
 \newcommand{\paramNcontenedores}{3}    % número de cámaras de fructificación
 \newcommand{\paramVolTote}{55}         % volumen nominal de cada tote [L]
+\newcommand{\paramCargaUtilNivel}{50}  % carga útil por nivel mínima recomendada [kg]
 
 % ---------- Especies asignadas (por contenedor) ----------------------
+% Asignación tentativa --- VALIDAR POST-CURSO. Ver pendientes-postcurso.md
 \newcommand{\paramEspecieA}{Pleurotus ostreatus (oyster)}
 \newcommand{\paramEspecieB}{Hericium erinaceus (lion's mane)}
 \newcommand{\paramEspecieC}{Lentinula edodes (shiitake)}
@@ -32,6 +34,12 @@
 \newcommand{\paramSensorLux}{BH1750}
 \newcommand{\paramSensorSubstrato}{DS18B20 (opcional)}
 
+% ---------- Esterilización e inoculación (§1.7) ----------------------
+\newcommand{\paramVolOllaPresion}{23}    % capacidad olla de presión [L]
+\newcommand{\paramPresionEster}{15}      % presión de esterilización [psi]
+\newcommand{\paramTiempoEsterSustrato}{90} % tiempo esterilización sustrato [min]
+\newcommand{\paramTiempoEsterGrano}{60}    % tiempo esterilización grano [min]
+
 % ---------- Identificador de revisión --------------------------------
-\newcommand{\paramRevision}{0.1-esqueleto}
+\newcommand{\paramRevision}{0.2-relleno-parcial}
 \newcommand{\paramFecha}{\today}

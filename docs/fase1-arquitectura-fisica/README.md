@@ -1,11 +1,10 @@
 # Fase 1 — Arquitectura física del rack de producción
 
 Documentación técnica del subsistema físico: rack, contenedores, flujo
-productivo y post-cosecha con deshidratadora.
+productivo, post-cosecha con deshidratadora y preparación de sustrato
+(esterilización + inoculación).
 
-**Estado actual:** esqueleto (revisión `0.1-esqueleto`). Las secciones
-contienen únicamente la estructura y los `TODO` que marcan qué se
-rellenará tras validación.
+**Revisión actual:** `0.2-relleno-parcial`.
 
 ---
 
@@ -15,28 +14,30 @@ rellenará tras validación.
 fase1-arquitectura-fisica/
 ├── main.tex                       # documento maestro LaTeX
 ├── params.tex                     # parámetros editables (H, W, D, T_amb, ...)
-├── referencias.bib                # bibliografía (vacía, con plantillas)
+├── referencias.bib                # bibliografía
 ├── secciones/
 │   ├── 01-rack.tex
 │   ├── 02-contenedores.tex
 │   ├── 03-asignacion-especies.tex
 │   ├── 04-bom.tex
 │   ├── 05-flujo-productivo.tex
-│   └── 06-postcosecha.tex
+│   ├── 06-postcosecha.tex
+│   └── 07-preparacion-sustrato.tex   ← nuevo (esterilización + inoculación)
 ├── diagramas/
-│   ├── flujo-productivo.mmd       # mermaid
+│   ├── flujo-productivo.mmd       # mermaid (incluye §1.7 aguas arriba)
 │   └── flujo-postcosecha.mmd      # mermaid con bifurcación fresco/seco
 ├── plantilla-secado.csv           # caracterización experimental vacía
 ├── cotizaciones_pendientes.md     # BOM físico con placeholders
-└── README.md                      # este archivo
+├── pendientes-postcurso.md        # decisiones diferidas al curso
+└── README.md
 ```
 
 ---
 
 ## Cómo compilar el LaTeX
 
-Requiere TeX Live completo (o MiKTeX) con `latexmk`, `biber`,
-paquetes `tikz`, `siunitx`, `biblatex`, `babel-spanish`.
+Requiere TeX Live (o MiKTeX) con `latexmk`, `biber`, y paquetes
+`tikz`, `siunitx`, `biblatex`, `babel-spanish`.
 
 ```bash
 cd docs/fase1-arquitectura-fisica
@@ -52,58 +53,51 @@ latexmk -C
 ## Cómo renderizar los diagramas mermaid
 
 ```bash
-# Instalación (una vez):
 npm install -g @mermaid-js/mermaid-cli
-
-# Render:
 mmdc -i diagramas/flujo-productivo.mmd   -o diagramas/flujo-productivo.png
 mmdc -i diagramas/flujo-postcosecha.mmd  -o diagramas/flujo-postcosecha.png
 ```
 
-GitHub renderiza los `.mmd` directamente cuando se embeben en
-markdown; el PNG sólo es necesario para incluirlos en el LaTeX
-mientras no estén redibujados en TikZ.
+GitHub renderiza los `.mmd` cuando se embeben en markdown.
 
 ---
 
-## Parámetros editables
+## Parámetros editables (`params.tex`)
 
-Editar `params.tex` para adaptar el documento a tus restricciones
-reales. Los defaults actuales corresponden a un rack comercial típico:
-
-| Macro                    | Default | Significado                        |
-|--------------------------|---------|------------------------------------|
-| `\paramHmax`             | 180 cm  | Altura máxima disponible           |
-| `\paramWmax`             | 90 cm   | Ancho máximo disponible            |
-| `\paramDmax`             | 45 cm   | Fondo máximo disponible            |
-| `\paramTambMin`          | 16 °C   | T ambiente mínima esperada         |
-| `\paramTambMax`          | 26 °C   | T ambiente máxima esperada         |
-| `\paramHRamb`            | 45 %    | HR ambiente típica                 |
-| `\paramNiveles`          | 4       | Número de niveles del rack         |
-| `\paramNcontenedores`    | 3       | Número de cámaras de fructificación|
-| `\paramVolTote`          | 55 L    | Volumen nominal de cada tote       |
+| Macro                       | Default | Significado                            |
+|-----------------------------|---------|----------------------------------------|
+| `\paramHmax`                | 180 cm  | Altura máxima disponible               |
+| `\paramWmax`                | 90 cm   | Ancho máximo disponible                |
+| `\paramDmax`                | 45 cm   | Fondo máximo disponible                |
+| `\paramTambMin`             | 16 °C   | T ambiente mínima esperada             |
+| `\paramTambMax`             | 26 °C   | T ambiente máxima esperada             |
+| `\paramHRamb`               | 45 %    | HR ambiente típica                     |
+| `\paramNiveles`             | 4       | Número de niveles del rack             |
+| `\paramNcontenedores`       | 3       | Cámaras de fructificación              |
+| `\paramVolTote`             | 55 L    | Volumen nominal de cada tote           |
+| `\paramCargaUtilNivel`      | 50 kg   | Carga útil por nivel mínima            |
+| `\paramVolOllaPresion`      | 23 L    | Capacidad olla de presión              |
+| `\paramPresionEster`        | 15 psi  | Presión de esterilización              |
+| `\paramTiempoEsterSustrato` | 90 min  | Tiempo esterilización sustrato         |
+| `\paramTiempoEsterGrano`    | 60 min  | Tiempo esterilización grano            |
 
 ---
 
-## Qué validar antes de pasar a Fase 2
+## Estado de cada sección
 
-Checklist de aceptación del **esqueleto**:
+| Sección | Estado | Notas |
+|---|---|---|
+| §1.1 Rack | ✅ relleno | Carga calculada, geometría paramétrica, comparativa de materiales |
+| §1.2 Contenedores | ✅ relleno | Patrón de perforación por especie, pasamuros tabulados |
+| §1.3 Asignación especies | ⚠ tentativa | Tabla con literatura. Validar tras curso |
+| §1.4 BOM | ⚠ placeholders | Sin precios inventados. Ver `cotizaciones_pendientes.md` |
+| §1.5 Flujo productivo | ✅ relleno | Incluye etapas aguas arriba (§1.7) |
+| §1.6 Post-cosecha | ⚠ parcial | Refs bibliográficas listas. Specs deshidratadora pendientes |
+| §1.7 Preparación sustrato | ✅ relleno | **Nuevo:** olla presión, SAB, spawn, ensacado |
 
-- [ ] El árbol de archivos refleja 1:1 las secciones 1.1–1.6 del brief.
-- [ ] `params.tex` cubre las variables que esperas como entrada.
-- [ ] Los dos diagramas mermaid representan correctamente los flujos
-      productivo y post-cosecha.
-- [ ] `cotizaciones_pendientes.md` cubre todos los componentes
-      **físicos** (no electrónicos: esos son Fase 8).
-- [ ] `plantilla-secado.csv` tiene las columnas que esperas registrar
-      por lote.
-- [ ] La bibliografía `.bib` referencia las fuentes mínimas que quieres
-      sostener para §1.3 y §1.6.
+## Próximos pasos del operador
 
-Una vez validado el esqueleto, se procede sección por sección:
-**§1.1 → §1.2 → §1.3 → §1.4 → §1.5 → §1.6**.
-
-En cada bloque, antes de redactar, te preguntaré las decisiones que
-no estén implícitas en `params.tex` (p. ej. material exacto del rack,
-diámetro de perforación por especie, especificaciones de la
-deshidratadora).
+1. Revisar `pendientes-postcurso.md` y empezar a marcar lo que se resuelva tras el curso.
+2. Empezar a cotizar lo de `cotizaciones_pendientes.md` (estructura del rack y olla de presión son los más urgentes).
+3. Compilar `main.tex` localmente y validar que renderiza limpio.
+4. Cuando estés listo: arrancamos Fase 2 (firmware ESP32) sin esperar a que esté todo cotizado/llegado.

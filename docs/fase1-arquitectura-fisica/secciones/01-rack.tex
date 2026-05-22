@@ -4,52 +4,101 @@
 \section{Plano dimensionado del rack}
 \label{sec:rack}
 
-\subsection*{Resumen de la sección}
-Esta sección define la geometría del rack metálico que alojará los
-\paramNcontenedores{} contenedores de fructificación. El diseño es
-paramétrico: las dimensiones máximas disponibles (\paramHmax\,cm de alto,
-\paramWmax\,cm de ancho, \paramDmax\,cm de fondo) y la temperatura
-ambiente esperada (\paramTambMin--\paramTambMax\,\si{\celsius}) se
-declaran en \texttt{params.tex} y propagan al resto del documento.
+Esta sección define la geometría del rack metálico que aloja los
+\paramNcontenedores{} contenedores de fructificación. Las dimensiones
+máximas disponibles (\paramHmax\,cm $\times$ \paramWmax\,cm $\times$
+\paramDmax\,cm) y la temperatura ambiente esperada
+(\paramTambMin--\paramTambMax\,\si{\celsius}) son paramétricas y viven
+en \texttt{params.tex}.
 
 % ---------------------------------------------------------------------
-\subsection{Restricciones de diseño}
-\label{sec:rack:restricciones}
+\subsection{Cálculo de carga útil}
+\label{sec:rack:carga}
 
-% TODO[Fase 1 — relleno]:
-% - Listar restricciones mecánicas (carga útil por nivel, rigidez,
-%   anclaje a pared, ventilación de servicio entre niveles).
-% - Justificar elección de \paramNiveles{} niveles dado el alto disponible.
-% - Discutir tolerancia térmica del material vs. operación cercana a
-%   humidificador ultrasónico (corrosión galvánica).
+La carga por nivel se estima como:
 
-\subsection{Geometría y vista lateral}
+\begin{equation}
+  m_{\text{nivel}} = m_{\text{tote}} + m_{\text{sustrato}} + m_{\text{accesorios}}
+\end{equation}
+
+\noindent con:
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item $m_{\text{tote}} \approx \SI{2}{\kilogram}$ (HDPE \paramVolTote\,L vacío).
+  \item $m_{\text{sustrato}} \approx \SI{12}{\kilogram}$ a \SI{15}{\kilogram}
+        (paja/pellets hidratados con HR $\approx 65$\,\%).
+  \item $m_{\text{accesorios}} \approx \SI{2}{\kilogram}$ (humidificador,
+        ventilador, cableado, sensores).
+\end{itemize}
+
+Total estimado por nivel cargado: $\approx$~\SI{17}{\kilogram}. Se
+especifica un rack con capacidad declarada
+\textbf{$\geq$~\paramCargaUtilNivel{}\,kg por nivel} para conservar un
+factor de seguridad $\approx 3$ frente a deformación.
+
+\subsection{Geometría general}
 \label{sec:rack:geometria}
 
-% TODO[Fase 1 — relleno]:
-% - Figura TikZ con vista frontal y lateral del rack acotado.
-% - Tabla de cotas: separación entre estantes, altura libre por nivel,
-%   posición de cada contenedor en la estructura.
-% - Diagrama de carga (peso de tote lleno con sustrato húmedo: estimar
-%   ~12--18 kg por contenedor).
+Asumiendo \paramNiveles{} niveles distribuidos uniformemente sobre
+\paramHmax\,cm de alto:
 
+\begin{equation}
+  h_{\text{libre}} = \frac{\text{\paramHmax}~\text{cm}}{\text{\paramNiveles}} \approx 45~\text{cm}
+\end{equation}
+
+Un tote estándar de \paramVolTote\,L mide aproximadamente
+$60 \times 40 \times 35$\,cm, por lo que la altura libre por entrepaño
+debe ser al menos $35 + 10 = 45$\,cm para permitir extracción vertical
+sin desensamblar el rack. Si el operador requiere $\geq 1$ nivel de
+servicio (electrónica, broker MQTT, humidificadores compartidos), se
+reserva el nivel inferior y se reduce a $N - 1$ niveles productivos.
+
+\paragraph{Distribución vertical recomendada (revisión 0.2).}
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Nivel 1 (superior, naturalmente más cálido): \paramEspecieB{}
+        --- \emph{requiere validación post-curso}.
+  \item Nivel 2: \paramEspecieA{}.
+  \item Nivel 3: \paramEspecieC{} (preferencia térmica más baja).
+  \item Nivel 4 (inferior): nivel de servicio (electrónica, fuentes,
+        depósito de agua del humidificador, broker MQTT).
+\end{itemize}
+
+% ---------------------------------------------------------------------
 \subsection{Selección de materiales}
 \label{sec:rack:materiales}
 
-% TODO[Fase 1 — relleno]:
-% - Comparar: acero galvanizado pintado vs. acero inoxidable vs.
-%   estantería plástica industrial. Criterios: resistencia a HR alta
-%   (>85\%), facilidad de sanitización, costo, disponibilidad MX.
-% - Recomendar UNA opción para BOM económica y UNA para BOM profesional.
+\begin{table}[H]
+  \centering
+  \caption{Comparativa de materiales para la estructura del rack.}
+  \label{tab:rack:materiales}
+  \begin{tabularx}{\linewidth}{lXXX}
+    \toprule
+    \textbf{Material} & \textbf{Pros} & \textbf{Contras} & \textbf{Veredicto} \\
+    \midrule
+    Acero galvanizado pintado &
+      Bajo costo, alta disponibilidad MX (Home Depot). &
+      Corrosión local si se raspa la pintura en ambiente HR$>$85\,\%. &
+      \textbf{Opción económica.} \\
+    Acero inoxidable AISI~304 &
+      Resistencia a HR alta y sanitización con peróxido. &
+      $\sim 3$--$5\times$ el costo del galvanizado. &
+      \textbf{Opción profesional.} \\
+    Estantería plástica industrial (PP/HDPE) &
+      Inmune a corrosión, ligera. &
+      Capacidad de carga típicamente $<$\,30\,kg/nivel; flexión
+      bajo peso húmedo. &
+      Descartada para esta carga. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 \subsection{Criterios de aceptación}
 \label{sec:rack:aceptacion}
 
-\begin{itemize}[leftmargin=*]
-  \item El rack soporta sin deformación visible la carga total estimada
-        (\paramNcontenedores{} contenedores cargados + accesorios).
-  \item La separación vertical entre niveles permite extraer cada tote
-        sin desmontar el rack ni desconectar cableado de sensores.
-  \item Existe un nivel reservado (típicamente el inferior o el
-        superior) para electrónica, broker MQTT, fuentes y humidificadores.
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Carga declarada del rack $\geq$~\paramCargaUtilNivel{}\,kg por
+        nivel.
+  \item Altura libre por entrepaño $\geq$~\SI{45}{\centi\meter}.
+  \item Anclaje antivuelco a muro instalado (mandatorio si el rack
+        descansa sobre superficie sin nivelar).
+  \item Nivel inferior reservado para servicios.
 \end{itemize}

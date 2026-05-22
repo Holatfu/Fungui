@@ -4,63 +4,93 @@
 \section{Diseño de los contenedores de fructificación}
 \label{sec:contenedores}
 
-\subsection*{Resumen de la sección}
-Cada uno de los \paramNcontenedores{} contenedores herméticos de
-\paramVolTote\,L se opera como una cámara independiente tipo
-\emph{Monotub} modificada, con intercambio gaseoso pasivo, pasamuros
-para instrumentación y sellado controlado.
+Cada uno de los \paramNcontenedores{} contenedores herméticos
+(\paramVolTote\,L, HDPE alimenticio) se opera como una cámara
+independiente tipo \emph{Monotub} modificada, con intercambio gaseoso
+pasivo regulado por perforaciones cubiertas de membrana microporosa.
 
 % ---------------------------------------------------------------------
 \subsection{Patrón de perforación para intercambio gaseoso pasivo}
 \label{sec:contenedores:perforacion}
 
-% TODO[Fase 1 — relleno]:
-% - Tabla por especie: diámetro de orificio [mm], separación entre
-%   centros [mm], número total de orificios, % de área abierta respecto
-%   al área lateral. Parametrizar según demanda metabólica:
-%       * Oyster: alta demanda de O2, tolera FAE intenso.
-%       * Lion's mane: demanda media, sensible a corrientes directas.
-%       * Shiitake: demanda media, tolera HR menor (~80--85%).
-% - Discutir filtro de polietileno microporoso (Tyvek o sintético)
-%   sobre cada perforación para mitigar contaminación.
-% - Esquema TikZ con malla de perforación cotada.
+El patrón se parametriza por especie. La demanda metabólica de
+O$_2$ y la tolerancia a CO$_2$ definen el porcentaje de área abierta
+sobre la pared lateral del tote~\cite{stamets2000}.
+
+\begin{table}[H]
+  \centering
+  \caption{Patrón de perforación por especie. Valores de partida
+    sujetos a validación experimental con sensor MH-Z19B (Fase 2).}
+  \label{tab:perforacion}
+  \begin{tabularx}{\linewidth}{Xcccc}
+    \toprule
+    \textbf{Especie} & $\varnothing$ [mm] & Sep. [mm] & N. orif. & \% área abierta \\
+    \midrule
+    \paramEspecieA & 6 & 50 & 80--120 & $\approx 3$\,\% \\
+    \paramEspecieB & 6 & 70 & 40--60  & $\approx 1{,}5$\,\% \\
+    \paramEspecieC & 6 & 70 & 40--60  & $\approx 1{,}5$\,\% \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Cada perforación se cubre por el interior con cinta de polímero
+microporoso (Tyvek 1073B o equivalente) para mitigar el ingreso de
+esporas contaminantes mientras se preserva el intercambio gaseoso. El
+patrón se distribuye sobre la \textbf{mitad superior} de la pared
+lateral, evitando la zona en contacto con sustrato húmedo.
 
 \subsection{Pasamuros para instrumentación y servicios}
 \label{sec:contenedores:pasamuros}
 
-% TODO[Fase 1 — relleno]:
-% - Mapa de ubicación (vista superior + lateral) de:
-%     * SHT35  — pared lateral a 2/3 de altura, evitar línea directa
-%       del humidificador.
-%     * MH-Z19B — pared opuesta al SHT35, mismo plano.
-%     * BH1750 — tapa interior, evitar sombra del LED.
-%     * Pasacable cámara ESP32-CAM — tapa superior, centro.
-%     * Manguera humidificador — pared corta, parte baja.
-%     * Cable DS18B20 sustrato — pasamuros independiente, sellado con
-%       prensaestopa PG7.
-% - Tipo de prensaestopa por diámetro de cable (PG7 / PG9 / PG11).
-% - Procedimiento de sellado (silicona alimenticia + arandela EPDM).
+Cada contenedor requiere los pasamuros listados en la
+tabla~\ref{tab:pasamuros}, sellados con prensaestopas roscados y
+arandela EPDM, complementados con cordón de silicona neutra de grado
+alimenticio.
+
+\begin{table}[H]
+  \centering
+  \caption{Pasamuros por contenedor.}
+  \label{tab:pasamuros}
+  \begin{tabularx}{\linewidth}{lXll}
+    \toprule
+    \textbf{Servicio} & \textbf{Ubicación} & \textbf{$\varnothing$ cable} & \textbf{Prensaestopa} \\
+    \midrule
+    Sensor SHT35           & Pared lateral, $\sfrac{2}{3}$ altura      & 4 hilos JST       & PG7 \\
+    Sensor MH-Z19B (UART)  & Pared opuesta a SHT35, mismo plano        & 4 hilos UART      & PG9 \\
+    Sensor BH1750 (I$^2$C) & Tapa interior, sombra del LED evitada     & 4 hilos JST       & PG7 \\
+    Cámara ESP32-CAM       & Tapa superior, centrada                   & flat cable + USB  & PG11 \\
+    Manguera humidificador & Pared corta, $\sfrac{1}{4}$ inferior      & manguera 6\,mm OD & PG11 \\
+    DS18B20 (sustrato)     & Pared corta opuesta, atravesando sustrato & 3 hilos blindado  & PG7 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Total: 6 pasamuros por contenedor $\times$ \paramNcontenedores{}
+contenedores $=$ 18 pasamuros consolidados en la BOM (\S\ref{sec:bom}).
 
 \subsection{Sellado e higiene del microambiente}
 \label{sec:contenedores:sellado}
 
-% TODO[Fase 1 — relleno]:
-% - Justificar empaque de silicona alimenticia grado FDA en perímetro
-%   de tapa.
-% - Procedimiento de sanitización entre lotes (peróxido 3\%, alcohol
-%   isopropílico 70\%, evitar cloro por corrosión del acero del rack).
-% - Tiempo de aireación post-sanitización antes de reintroducir bolsa
-%   inoculada.
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Empaque perimetral de silicona alimenticia grado FDA, aplicado
+        en frío en el canal de cierre de la tapa.
+  \item Sanitización entre lotes: peróxido de hidrógeno al 3\,\% en
+        spray, seguido de alcohol isopropílico al 70\,\%. Tiempo de
+        aireación mínimo: 30\,min con tapa abierta antes de
+        reintroducir bolsa colonizada.
+  \item \textbf{Prohibido cloro / hipoclorito:} corrosión inducida sobre
+        anclajes del rack y oxidación de prensaestopas.
+\end{itemize}
 
 \subsection{Criterios de aceptación}
 \label{sec:contenedores:aceptacion}
 
-\begin{itemize}[leftmargin=*]
-  \item Cada contenedor mantiene HR $\geq$\,85\% durante al menos 4\,h
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Cada contenedor mantiene HR $\geq$\,85\,\% durante al menos 4\,h
         sin actuación del humidificador (verificable con telemetría
         de Fase 2).
   \item Los pasamuros no presentan fuga visible al ensayo de presión
-        positiva ligera (soplido controlado, sin gotear sello).
-  \item La tapa puede abrirse y cerrarse sin re-aplicar silicona por
-        al menos 30 ciclos antes de mantenimiento del empaque.
+        positiva ligera.
+  \item La tapa abre y cierra sin re-aplicar silicona durante al menos
+        30 ciclos antes de mantenimiento.
 \end{itemize}

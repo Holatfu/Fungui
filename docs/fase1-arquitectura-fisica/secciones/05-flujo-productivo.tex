@@ -4,55 +4,84 @@
 \section{Flujo del proceso productivo}
 \label{sec:flujo}
 
-\subsection*{Resumen de la sección}
-Diagrama de extremo a extremo: recepción de bolsa inoculada $\to$
-incubación $\to$ inducción de fructificación $\to$ cosecha $\to$
-post-cosecha (fresco o deshidratado) $\to$ empaque $\to$ distribución.
+El flujo abarca desde la preparación e inoculación del sustrato hasta
+la distribución del producto final, fresco o deshidratado.
 
 % ---------------------------------------------------------------------
+\subsection{Etapas y duración orientativa}
+\label{sec:flujo:etapas}
+
+\begin{table}[H]
+  \centering
+  \caption{Etapas del proceso productivo. Tiempos orientativos para
+    \paramEspecieA{}, ajustables por especie (\S\ref{sec:especies}).}
+  \label{tab:flujo}
+  \begin{tabularx}{\linewidth}{lXl}
+    \toprule
+    \textbf{Etapa} & \textbf{Acción} & \textbf{Duración} \\
+    \midrule
+    1 & Hidratación del sustrato y mezcla con suplementos.            & 12--24\,h \\
+    2 & Embolsado en bolsa autoclavable con parche filtro.            & 0{,}5\,h/lote \\
+    3 & Esterilización en olla de presión (\S\ref{sec:preparacion}).  & \paramTiempoEsterSustrato\,min + enfriado 12\,h \\
+    4 & Inoculación con grain spawn en SAB.                           & 0{,}3\,h/bolsa \\
+    5 & Incubación en oscuridad, T ambiente.                          & 10--21\,días \\
+    6 & Inducción de fructificación (al contenedor sellado).          & 0\,h (transición) \\
+    7 & Pinning + maduración.                                         & 5--14\,días \\
+    8 & Cosecha.                                                      & 0{,}5\,h/contenedor \\
+    9a& Empaque fresco $\to$ refrigeración 2--4\,\si{\celsius}.       & inmediato \\
+    9b& Deshidratado (\S\ref{sec:postcosecha}) $\to$ empaque hermético.& 6--14\,h \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
 \subsection{Diagrama general}
 \label{sec:flujo:diagrama}
 
-% TODO[Fase 1 — relleno]:
-% - Versión rápida: incluir el diagrama mermaid de
-%   diagramas/flujo-productivo.mmd como figura (PNG exportado).
-% - Versión definitiva: redibujar en TikZ vectorial para el LaTeX.
-%
-% Estructura del flujo a representar:
-%   [Recepción bolsa inoculada]
-%        → [Cuarentena visual 24 h]
-%        → [Incubación a temperatura ambiente, oscuridad, sin abrir]
-%        → [Detección de colonización completa por inspección]
-%        → [Apertura / corte de bolsa según especie]
-%        → [Inducción de fructificación en contenedor sellado]
-%                  ↑ control HR, T, CO2, lux (Fase 2)
-%        → [Pinning (formación de primordios)]
-%        → [Maduración]
-%        → [Cosecha cuando margen de sombrero comienza a aplanar]
-%        → [Decisión: fresco vs deshidratado]
-%                  ↘ fresco → empaque cámara fría → distribución
-%                  ↘ seco   → §1.6 deshidratado → empaque → distribución
-%
-% Marcar puntos donde se registra dato en la base (Fase 7):
-%   • inoculación, apertura, primera cosecha, peso fresco, peso seco.
+El diagrama renderizable se encuentra en
+\texttt{diagramas/flujo-productivo.mmd} (mermaid). Para incluirlo en el
+PDF se exporta a PNG y se inserta:
 
-\subsection{Indicadores operativos por etapa}
-\label{sec:flujo:kpi}
+\begin{verbatim}
+mmdc -i diagramas/flujo-productivo.mmd -o diagramas/flujo-productivo.png
+\end{verbatim}
 
-% TODO[Fase 1 — relleno]:
-% Tabla:
-%   | Etapa | Variable monitoreada | Fuente del dato | Umbral / criterio |
-% Ejemplos:
-%   - Incubación → T sustrato (DS18B20 opcional) → 20--24 °C
-%   - Fructificación → HR + CO2 + lux → según especie (§1.3)
-%   - Cosecha → inspección visual + cámara (Fase 3)
-%   - Post-cosecha → masa fresca → balanza, registro manual en lote
+\subsection{Puntos de registro hacia la base de datos (Tópico~7)}
+\label{sec:flujo:registro}
+
+Cada etapa con \emph{flecha hacia DB} en el diagrama
+\texttt{flujo-productivo.mmd} corresponde a un registro persistente:
+
+\begin{table}[H]
+  \centering
+  \caption{Puntos de registro a la base de datos unificada.}
+  \label{tab:registro}
+  \begin{tabularx}{\linewidth}{lXl}
+    \toprule
+    \textbf{Etapa} & \textbf{Variable registrada} & \textbf{Tabla destino} \\
+    \midrule
+    1 & Lote, especie, sustrato, masa hidratada                   & \texttt{lotes} \\
+    3 & T y t de esterilización, presión registrada               & \texttt{lotes} \\
+    4 & Fecha inoculación, jeringa/spawn usado                    & \texttt{lotes} \\
+    5 & Detección colonización completa (inspección)              & \texttt{lotes} \\
+    6 & Fecha apertura, contenedor destino                        & \texttt{lotes} \\
+    7 & Telemetría continua HR, T, CO$_2$, lux (30\,s)            & \texttt{mediciones} \\
+    7 & Imagen cada 15\,min                                       & \texttt{imagenes} \\
+    8 & Masa fresca cosechada, BE\,\% calculado                   & \texttt{cosechas} \\
+    9a/9b & Decisión fresco/seco; masa fresca destinada a secado  & \texttt{cosechas} \\
+    9b & Masa seca final, factor conversión, HR residual          & \texttt{cosechas} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 \subsection{Criterios de aceptación}
 \label{sec:flujo:aceptacion}
 
-\begin{itemize}[leftmargin=*]
-  \item El diagrama identifica TODO punto de registro de dato y lo
-        mapea a una tabla del schema (Fase 7).
-  \item No quedan transiciones sin condición de paso explícita.
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item El diagrama identifica todo punto de registro y lo mapea a una
+        tabla del schema (Tópico~7).
+  \item Cada transición tiene una condición de paso explícita
+        (colonización completa, primordios visibles, sombrero
+        aplanado, HR residual $<$ objetivo).
+  \item Los tiempos de tabla~\ref{tab:flujo} se actualizan con datos
+        propios tras los primeros 3 lotes.
 \end{itemize}

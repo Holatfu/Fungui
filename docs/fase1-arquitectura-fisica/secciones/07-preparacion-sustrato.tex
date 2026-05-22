@@ -1,0 +1,152 @@
+% =====================================================================
+% §1.7 — Preparación de sustrato e inoculación
+% =====================================================================
+\section{Preparación de sustrato e inoculación}
+\label{sec:preparacion}
+
+Subsistema \emph{aguas arriba} del rack: prepara y esteriliza el
+sustrato, propaga el micelio en grano (\emph{grain spawn}) y arma las
+bolsas inoculadas que se incubarán y trasladarán a los contenedores de
+fructificación (\S\ref{sec:contenedores}).
+
+\textbf{Nota.} Esta sección reemplaza el supuesto inicial del brief de
+``recibir bolsas ya inoculadas''. El operador realiza el proceso
+completo desde sustrato bruto.
+
+% ---------------------------------------------------------------------
+\subsection{Esterilización por olla de presión}
+\label{sec:preparacion:autoclave}
+
+Se usa una olla de presión doméstica de \paramVolOllaPresion\,L como
+autoclave de bajo costo. Parámetros de operación:
+
+\begin{table}[H]
+  \centering
+  \caption{Ciclos de esterilización en olla de presión.}
+  \label{tab:autoclave}
+  \begin{tabularx}{\linewidth}{Xcc}
+    \toprule
+    \textbf{Material} & \textbf{Presión [psi]} & \textbf{Tiempo [min]} \\
+    \midrule
+    Grano para spawn (frasco 1\,L)               & \paramPresionEster & \paramTiempoEsterGrano \\
+    Sustrato en bolsa (paja, pellets, mezclas)   & \paramPresionEster & \paramTiempoEsterSustrato \\
+    Material de inoculación (bisturí, jeringas)  & \paramPresionEster & 30 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\paragraph{Validación de ciclo.} El tiempo \emph{efectivo} comienza
+cuando la válvula libera vapor sostenido; el termómetro de aguja
+montado en la tapa permite verificación cruzada. Para sustratos densos
+o cargas mayores se incrementa el tiempo en 30\,min por cada nivel
+adicional de carga.
+
+\paragraph{Enfriado.} La bolsa o frasco esterilizado debe enfriarse a
+$T \leq 30\,\si{\celsius}$ antes de inoculación (típicamente 8--12\,h en
+ambiente cerrado). \textbf{No abrir} la bolsa antes de inoculación.
+
+\subsection{Still Air Box (SAB)}
+\label{sec:preparacion:sab}
+
+Cámara de aire estático construida con tote hermético de 60--80\,L
+adicional, con dos perforaciones circulares (diámetro $\approx$
+$\sfrac{1}{2}$ antebrazo) en la pared corta y manga elástica opcional.
+Procedimiento de uso:
+
+\begin{enumerate}[leftmargin=*,itemsep=0pt]
+  \item Limpieza con peróxido 3\,\% + alcohol isopropílico 70\,\%
+        interior y exterior.
+  \item Reposo cerrado 5--10\,min para sedimentación de aerosoles.
+  \item Introducir bolsa esterilizada, jeringa de spawn, bisturí
+        flameado, alcohol en spray.
+  \item Inocular minimizando movimientos amplios; sellar la perforación
+        del filtro con cinta micropore inmediatamente tras inyectar.
+\end{enumerate}
+
+\pendientecurso{Validar dimensiones exactas del SAB y procedimiento
+contra recomendaciones del curso. Considerar upgrade a flow hood HEPA
+casero si la tasa de contaminación supera 10\,\% en los primeros 5
+lotes.}
+
+\subsection{Producción de grain spawn}
+\label{sec:preparacion:spawn}
+
+El grain spawn (micelio sobre grano) es el inóculo intermedio entre el
+cultivo madre (jeringa de esporas o cultivo en placa) y el sustrato
+final. Proceso:
+
+\begin{enumerate}[leftmargin=*,itemsep=0pt]
+  \item Enjuagar y remojar grano (quinoa, trigo o mijo) 12--24\,h.
+  \item Escurrir y secar superficialmente.
+  \item Frasco 1\,L cargado a $\sfrac{2}{3}$; tapa con perforación
+        para intercambio gaseoso cubierta con cinta micropore.
+  \item Esterilizar en olla \paramVolOllaPresion\,L: \paramTiempoEsterGrano\,min
+        a \paramPresionEster\,psi.
+  \item Enfriar a $T \leq 30\,\si{\celsius}$ (mínimo 8\,h).
+  \item Inocular con jeringa de esporas o transferir trozos de placa
+        en SAB.
+  \item Incubar en oscuridad a 22--24\,\si{\celsius} hasta colonización
+        completa (10--21\,días según especie).
+  \item Agitar el frasco una vez a la mitad de la colonización para
+        distribuir micelio.
+\end{enumerate}
+
+\subsection{Armado de bolsas de sustrato inoculado}
+\label{sec:preparacion:bolsas}
+
+\begin{enumerate}[leftmargin=*,itemsep=0pt]
+  \item Hidratar sustrato a campo (HR $\approx 65$\,\%) y agregar
+        suplemento (yeso, salvado) según especie.
+  \item Embolsar 1{,}5--2{,}5\,kg por bolsa autoclavable con parche
+        filtro 0{,}2\,\si{\micro\meter}.
+  \item Esterilizar a \paramPresionEster\,psi durante
+        \paramTiempoEsterSustrato\,min.
+  \item Enfriar.
+  \item Inocular en SAB con $\approx 5$--$10$\,\% del peso húmedo en
+        grain spawn.
+  \item Cerrar bolsa con sello impulso o liga doblada.
+  \item Etiquetar (lote, especie, fecha) y trasladar a incubación.
+\end{enumerate}
+
+\subsection{Control de contaminación}
+\label{sec:preparacion:contam}
+
+Registro obligatorio por lote: número de bolsas inoculadas, número de
+bolsas con contaminación detectada (Trichoderma verde, mohos negros,
+bacterial sour), fecha de detección. Métricas objetivo:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Tasa de contaminación $<$10\,\% en los primeros 5 lotes.
+  \item Tasa $<$5\,\% en régimen establecido.
+  \item Una tasa $>$25\,\% indica revisar: tiempo de esterilización,
+        sello del filtro de la bolsa, técnica en SAB o calidad del
+        cultivo madre.
+\end{itemize}
+
+\subsection{Hooks para la base de datos (Tópico~7)}
+\label{sec:preparacion:hooks}
+
+Campos adicionales en la tabla \texttt{lotes}:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item \texttt{sustrato\_tipo}, \texttt{sustrato\_masa\_hidratada\_kg}
+  \item \texttt{esteriliz\_temp\_C}, \texttt{esteriliz\_tiempo\_min},
+        \texttt{esteriliz\_presion\_psi}
+  \item \texttt{spawn\_origen} (jeringa lote / placa propia)
+  \item \texttt{spawn\_porcentaje} (\% sobre masa húmeda)
+  \item \texttt{contaminacion\_detectada\_bool},
+        \texttt{contaminacion\_tipo} (enum)
+  \item \texttt{fecha\_inoculacion}, \texttt{fecha\_colonizacion\_completa}
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+\label{sec:preparacion:aceptacion}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Olla de presión instalada, ciclos verificados con termómetro
+        independiente.
+  \item SAB armado y sanitizado.
+  \item Primer lote de grain spawn colonizado a $>$90\,\%.
+  \item Tasa de contaminación documentada para cada lote.
+  \item Campos en \texttt{lotes} reflejados en el schema del Tópico~7.
+\end{itemize}

@@ -4,66 +4,97 @@
 \section{Asignación de especies por contenedor}
 \label{sec:especies}
 
-\subsection*{Resumen de la sección}
-Se justifica qué especie ocupa cada uno de los \paramNcontenedores{}
-contenedores con base en sus parámetros ambientales óptimos de
-fructificación, su tolerancia a desviaciones, y la lógica operativa
-(rotación, cosechas escalonadas, riesgo cruzado de contaminación).
+\textbf{Nota de revisión.} La selección final de especies y sus
+\emph{setpoints} óptimos están sujetos a validación tras el curso de
+cultivo del operador. Esta sección consolida valores de partida
+documentados en literatura para tres especies de uso comercial común.
+La tabla \ref{tab:especies} sirve como base para los \emph{setpoints}
+del firmware (Fase~2).
 
 % ---------------------------------------------------------------------
-\subsection{Parámetros ambientales por especie}
+\subsection{Parámetros ambientales por especie (literatura)}
 \label{sec:especies:tabla}
 
-% TODO[Fase 1 — relleno]:
-% Construir tabla con los siguientes campos por especie:
-%   - Temperatura óptima de fructificación [°C]
-%   - Humedad relativa [%]
-%   - CO2 máximo tolerable [ppm]
-%   - Fotoperiodo [h luz / h oscuridad] e intensidad [lux]
-%   - Duración típica de pinning + fructificación [días]
-%   - Rendimiento esperado (BE %) sobre sustrato húmedo
-% Citar referencias en referencias.bib (Stamets, Chang \& Miles,
-% manuales FAO, papers de Pleurotus/Hericium/Lentinula).
-%
-% Formato sugerido:
-%
-% \begin{table}[H]
-%   \centering
-%   \caption{Parámetros ambientales óptimos por especie}
-%   \begin{tabular}{lcccc}
-%     \toprule
-%     Especie & T [\si{\celsius}] & HR [\%] & CO$_2$ [ppm] & Lux \\
-%     \midrule
-%     \paramEspecieA & ... & ... & ... & ... \\
-%     \paramEspecieB & ... & ... & ... & ... \\
-%     \paramEspecieC & ... & ... & ... & ... \\
-%     \bottomrule
-%   \end{tabular}
-% \end{table}
+\begin{table}[H]
+  \centering
+  \caption{Rangos ambientales óptimos de fructificación reportados en
+    literatura. Adaptado de Stamets~\cite{stamets2000} y Chang \&
+    Miles~\cite{chang2004}.}
+  \label{tab:especies}
+  \begin{tabularx}{\linewidth}{Xccccc}
+    \toprule
+    \textbf{Especie} & T [\si{\celsius}] & HR [\%] & CO$_2$ [ppm] & Lux & Fotop. [h] \\
+    \midrule
+    \paramEspecieA & 18--24 & 85--95 & $<$1000 & 500--1500 & 12 \\
+    \paramEspecieB & 18--24 & 90--95 & $<$800  & 500--1000 & 12 \\
+    \paramEspecieC & 12--18 & 80--90 & $<$1000 & 500--2000 & 12 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
-\subsection{Asignación propuesta}
+\paragraph{Notas operativas.}
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item \textbf{Oyster} (\paramEspecieA): especie más permisiva y rápida.
+        Ideal como especie de entrenamiento operativo. Tolera CO$_2$
+        más alto a costa de elongación del estípite.
+  \item \textbf{Lion's mane} (\paramEspecieB): sensible a corrientes
+        directas de aire. Forma "barbas" con HR sostenida $>$\,90\,\%;
+        bajo deshidratación produce ramificación corta.
+  \item \textbf{Shiitake} (\paramEspecieC): prefiere temperaturas más
+        bajas y choque térmico inicial (cold shock $\approx 10$\,\si{\celsius}
+        durante 24--48\,h) para inducir pinning.
+\end{itemize}
+
+\subsection{Asignación propuesta (tentativa)}
 \label{sec:especies:asignacion}
 
-% TODO[Fase 1 — relleno]:
-% Justificar:
-%  - Contenedor 1 (nivel medio, mejor accesibilidad): \paramEspecieA
-%    — alta rotación, especie de entrenamiento operativo.
-%  - Contenedor 2 (nivel más estable térmicamente): \paramEspecieB
-%    — sensible a fluctuaciones, requiere HR alta sostenida.
-%  - Contenedor 3 (nivel con mayor margen térmico bajo): \paramEspecieC
-%    — tolera y prefiere temperaturas algo menores.
-% Discutir riesgo de contaminación cruzada entre especies y por qué la
-% segregación por contenedor lo mitiga.
+Justificación de la asignación contenedor$\leftrightarrow$especie
+basada en la jerarquía térmica natural del rack (calor asciende):
+
+\begin{table}[H]
+  \centering
+  \caption{Asignación propuesta de especies por nivel.}
+  \label{tab:asignacion}
+  \begin{tabularx}{\linewidth}{cXl}
+    \toprule
+    \textbf{Nivel} & \textbf{Especie} & \textbf{Justificación} \\
+    \midrule
+    1 (sup.) & \paramEspecieB & T más alta naturalmente; banda 18--24\,\si{\celsius}. \\
+    2        & \paramEspecieA & Banda 18--24\,\si{\celsius}; alta rotación, acceso medio. \\
+    3        & \paramEspecieC & Banda térmica más baja del rack (12--18\,\si{\celsius}). \\
+    4 (inf.) & --- & Servicios (electrónica, fuentes, broker MQTT). \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\pendientecurso{Validar la jerarquía térmica del rack midiendo en sitio
+con termómetro IR antes de fijar la asignación. Reasignar si la
+estratificación real difiere de la asumida.}
+
+\subsection{Riesgo de contaminación cruzada}
+\label{sec:especies:contaminacion}
+
+La segregación física por contenedor mitiga contaminación cruzada
+entre especies; sin embargo, durante el manejo (apertura de tapa,
+cosecha) se generan corrientes que pueden transportar esporas. Medidas
+operativas:
+
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Abrir un contenedor a la vez.
+  \item Manejar primero la especie con mayor sensibilidad
+        (lion's mane) y al final la más robusta (oyster).
+  \item Lavarse manos y desinfectar superficie de trabajo entre
+        manipulaciones.
+\end{itemize}
 
 \subsection{Criterios de aceptación}
 \label{sec:especies:aceptacion}
 
-\begin{itemize}[leftmargin=*]
-  \item La tabla de parámetros está sustentada con al menos una cita
-        bibliográfica revisable por especie.
-  \item La asignación contenedor$\leftrightarrow$especie respeta la
-        jerarquía térmica natural del rack (zonas más cálidas arriba,
-        más frescas abajo) determinada empíricamente en Fase 2.
-  \item Los \emph{setpoints} de cada contenedor (a configurar en
-        Fase 2) derivan directamente de esta tabla.
+\begin{itemize}[leftmargin=*,itemsep=0pt]
+  \item Tabla de parámetros respaldada por al menos dos referencias
+        bibliográficas verificables.
+  \item Asignación contenedor$\leftrightarrow$especie revalidada con
+        mapeo térmico en sitio antes de cargar el primer lote.
+  \item Setpoints de Fase~2 derivan directamente de
+        tabla~\ref{tab:especies}.
 \end{itemize}
