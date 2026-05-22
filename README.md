@@ -225,6 +225,4 @@ Cada subdirectorio mantiene su propio `README.md` operativo.
 
 ---
 
-## Contacto del operador
-
-**Hola Tofu** — Ciudad de México. I+D embedded systems.
+FF Holatfu
